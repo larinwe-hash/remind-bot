@@ -1,0 +1,16 @@
+[Unit]
+Description=Telegram remind bot
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=botuser
+# WorkingDirectory обязателен: APScheduler ищет функцию по пути
+# "tasks:send_reminder", и Python должен находить модуль tasks рядом.
+WorkingDirectory=/home/botuser/remind-bot
+ExecStart=/home/botuser/remind-bot/venv/bin/python bot.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
